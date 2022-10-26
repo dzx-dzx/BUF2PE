@@ -1,0 +1,13 @@
+/.metals
+/.bloop
+/.bsp
+/project
+/target
+/rtl
+/tmp
+*.log
+sim_build
+__pycache__
+*.vcd
+results.xml
+/simWorkspace
