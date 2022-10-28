@@ -5,11 +5,10 @@ import spinal.core._
 object PEMain {
   def main(args: Array[String]): Unit = {
     SpinalConfig(targetDirectory = "rtl").generateVerilog(
-      gen = new PE(
-        g = PEGenerics(
+      gen = new StreamIndexedFIFO(
+        StreamIndexedFIFOGenerics(
           pixelBitWidth = 8,
-          activationSide = 7,
-          kernelSide = 3
+          slidingWindowDepth = 3
         )
       )
     )

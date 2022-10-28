@@ -7,16 +7,15 @@ import spinal.lib._
 import scala.collection.mutable.Queue
 
 class BUF2PETestbench extends AnyFunSuite {
-  var compiled: SimCompiled[PE] = null
+  var compiled: SimCompiled[StreamIndexedFIFO] = null
   test("compile") {
     compiled = SimConfig.withWave
       .withConfig(SpinalConfig(targetDirectory = "rtl"))
       .compile(
-        new PE(
-          g = PEGenerics(
+        new StreamIndexedFIFO(
+          StreamIndexedFIFOGenerics(
             pixelBitWidth = 8,
-            activationSide = 7,
-            kernelSide = 3
+            slidingWindowDepth = 3
           )
         )
       )
