@@ -28,3 +28,16 @@ class StreamIndexedFIFO(g: StreamIndexedFIFOGenerics) extends Component {
     Vec(shift.map(_.payload))
   }
 }
+
+object StreamIndexedFIFO {
+  def main(args: Array[String]): Unit = {
+    SpinalConfig(targetDirectory = "rtl").generateVerilog(
+      gen = new StreamIndexedFIFO(
+        StreamIndexedFIFOGenerics(
+          pixelBitWidth = 8,
+          slidingWindowDepth = 3
+        )
+      )
+    )
+  }
+}
