@@ -22,3 +22,8 @@ case class Weight(g: PEGenerics) extends Bundle {
 case class Out(g: PEGenerics) extends Bundle {
   val pixels = Vec(g.Pixel, g.kernelSide)
 }
+
+
+object ActivationSource extends SpinalEnum{
+  val BUFFER, FIFO, SHIFT = newElement()
+}

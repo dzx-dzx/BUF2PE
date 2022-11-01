@@ -3,16 +3,12 @@ package BUF2PE
 import spinal.core._
 import spinal.lib._
 
-class MAC(peak: Int, width: Int) extends Component {
-  def fixType = SFix(
-    peak = peak exp,
-    width = width bits
-  )
+class MAC(operandType: HardType[SFix]) extends Component {
   val io = new Bundle {
-    val weight, activation = in(fixType)
-    val output             = out(fixType)
+    val weight, activation = in(operandType)
+    val output             = out(operandType)
   }
-  val accumulator = Reg(fixType) init (0)
+  val accumulator = Reg(operandType) init (0)
   accumulator := (accumulator + io.weight * io.activation).truncated
   io.output   := accumulator
 }
@@ -20,7 +16,7 @@ class MAC(peak: Int, width: Int) extends Component {
 object MAC {
   def main(args: Array[String]): Unit = {
     SpinalConfig(targetDirectory = "rtl").generateVerilog(
-      gen = new MAC(peak = 8, width = 16)
+      gen = new MAC(SFix(peak = 8 exp, width = 16 bits))
     )
   }
 }
