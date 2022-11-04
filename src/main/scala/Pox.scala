@@ -28,6 +28,7 @@ class Pox(operandType: HardType[SFix], pox: Int = 3, kernel_size: Int = 3) exten
 
     io.activation.fifo_out(i) := History(pe_array(i).io.activation.shift_out, kernel_size).last
     io.output(i)              := pe_array(i).io.output
+  
   }
 }
 

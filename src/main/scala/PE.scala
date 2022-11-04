@@ -28,7 +28,7 @@ class PE(operandType: HardType[SFix]) extends Component {
   mac.io.weight := io.weight
   io.output     := mac.io.output
 
-  io.activation.shift_out := RegNext(io.activation.shift_in)
+  io.activation.shift_out := RegNext(mac.io.activation) init(0)
 }
 object PE {
   def main(args: Array[String]): Unit = {
