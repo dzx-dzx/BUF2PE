@@ -22,10 +22,15 @@ class PoxTestbench extends AnyFunSuite with BeforeAndAfter {
         val clockDomain = dut.clockDomain
         val io = dut.io
         clockDomain.forkStimulus(10)
-        io.activation.source #= ActivationSource.BUFFER
+        io.activation.source_from #= ActivationSource.BUFFER
         io.activation.buffer.randomize()
         io.activation.buffer_standby.randomize()
         clockDomain.waitSampling()
+        io.activation.source_from #= ActivationSource.SHIFT
+        io.activation.buffer.randomize()
+        io.activation.buffer_standby.randomize()
+        clockDomain.waitSampling(10)
+
         
       }
     }
