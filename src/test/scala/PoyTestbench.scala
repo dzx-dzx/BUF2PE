@@ -37,14 +37,14 @@ class PoyTestbench extends AnyFunSuite with BeforeAndAfter {
         io.clear #= false
         io.reset_mac #= false
 
-        for (i <- 0 to kernel_size) {
+        for (i <- 0 to 100) {
           fork {
             io.activation.randomize()
           }
           fork {
             io.weight.randomize()
           }
-        clockDomain.waitSampling()
+          clockDomain.waitSampling()
         }
 
       }
