@@ -12,8 +12,8 @@ class Pox(operandType: HardType[SFix], pox: Int = 3, kernel_size: Int = 3) exten
       val source_from     = in(ActivationSource())
       val fifo_out        = out(Vec(operandType, pox))
     }
-    val clear  = in(Bool)
-    val output = out(Vec(operandType, pox))
+    val reset_mac = in(Bool)
+    val output    = out(Vec(operandType, pox))
   }
   val pe_array: Seq[PE] = Seq.fill(pox)(new PE(operandType))
   for (i <- 0 until pox) {
@@ -23,7 +23,7 @@ class Pox(operandType: HardType[SFix], pox: Int = 3, kernel_size: Int = 3) exten
     pe_array(i).io.activation.buffer      := io.activation.buffer(i)
     pe_array(i).io.activation.fifo        := io.activation.fifo_in(i)
 
-    pe_array(i).io.reset_mac := io.clear
+    pe_array(i).io.reset_mac := io.reset_mac
 
     if (i == pox - 1) {
       pe_array(i).io.activation.shift_in := io.activation.buffer_standby

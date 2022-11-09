@@ -7,10 +7,10 @@ class MAC(operandType: HardType[SFix]) extends Component {
   val io = new Bundle {
     val weight, activation = in(operandType)
     val output             = out(operandType)
-    val clear              = in(Bool)
+    val reset_mac          = in(Bool)
   }
   val accumulator = Reg(operandType) init (0)
-  when(io.clear) {
+  when(io.reset_mac) {
     accumulator := operandType().getZero
   } otherwise {
     accumulator := (accumulator + io.weight * io.activation).truncated

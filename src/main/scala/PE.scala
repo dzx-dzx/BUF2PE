@@ -8,7 +8,7 @@ class PE(operandType: HardType[SFix]) extends Component {
     val weight = in(operandType)
     val activation = new Bundle {
       val buffer, fifo, shift_in = in(operandType)
-      val source_from                 = in(ActivationSource())
+      val source_from            = in(ActivationSource())
       val shift_out              = out(operandType)
     }
     val reset_mac = in(Bool)
@@ -26,9 +26,9 @@ class PE(operandType: HardType[SFix]) extends Component {
       mac.io.activation := io.activation.shift_in
     }
   }
-  mac.io.clear  := io.reset_mac
-  mac.io.weight := io.weight
-  io.output     := mac.io.output
+  mac.io.reset_mac := io.reset_mac
+  mac.io.weight    := io.weight
+  io.output        := mac.io.output
 
   io.activation.shift_out := RegNext(mac.io.activation) init (0)
 }
