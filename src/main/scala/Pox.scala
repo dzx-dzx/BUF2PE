@@ -29,9 +29,9 @@ class Pox(operandType: HardType[SFix], pox: Int = 3, kernel_size: Int = 3) exten
       pe_array(i).io.activation.shift_in := io.activation.buffer_standby
     } else { pe_array(i).io.activation.shift_in := pe_array(i + 1).io.activation.shift_out }
 
-    io.activation
-      .fifo_out(i) := History(pe_array(i).io.activation.shift_out, kernel_size + 1, init = operandType().getZero).last
-    io.output(i)   := pe_array(i).io.output
+    io.activation.fifo_out(i) :=
+      Delay(pe_array(i).io.activation.shift_out, kernel_size - 1, init = operandType().getZero)
+    io.output(i) := pe_array(i).io.output
 
   }
 }
