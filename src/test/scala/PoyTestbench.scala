@@ -29,23 +29,28 @@ class PoyTestbench extends AnyFunSuite with BeforeAndAfter {
 
         // val activation_full = Seq.fill(poy + kernel_size - 1)(Seq.fill(pox + kernel_size - 1)(Random.nextInt()))
 
+        clockDomain.forkStimulus(5)
         io.clear #= true
         io.reset_mac #= true
 
-        clockDomain.forkStimulus(5)
-        clockDomain.waitSampling()
+        clockDomain.waitSampling(10)
         io.clear #= false
         io.reset_mac #= false
+        io.weight #= 0.01
         io.activation.buffer.foreach(_.foreach(_ #= 0))
+        io.activation.buffer_standby.zipWithIndex.foreach { case (s, i) => s #= i * 0.05 }
 
-        for (i <- 0 to 10) {
+        print(SFix(peak = 2 exp, width = 16 bits).maxValue)
+
+        for (i <- 0 until 18) {
+          clockDomain.waitSampling()
           fork {
-            io.activation.buffer.foreach(_.foreach(s => s #= s.toBigDecimal + 0.1))
+            io.activation.buffer.foreach(_.foreach(s => s #= s.toBigDecimal + 0.05))
+            io.activation.buffer_standby.foreach(s => s #= s.toBigDecimal + 0.05)
           }
           fork {
             io.weight.randomize()
           }
-          clockDomain.waitSampling()
         }
 
       }
