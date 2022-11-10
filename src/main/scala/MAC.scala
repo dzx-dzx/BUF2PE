@@ -11,7 +11,7 @@ class MAC(operandType: HardType[SFix]) extends Component {
   }
   val accumulator = Reg(operandType) init (0)
   when(io.reset_mac) {
-    accumulator := operandType().getZero
+    accumulator := (io.weight * io.activation).truncated
   } otherwise {
     accumulator := (accumulator + io.weight * io.activation).truncated
   }

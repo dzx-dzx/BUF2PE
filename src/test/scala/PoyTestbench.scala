@@ -18,7 +18,7 @@ class PoyTestbench extends AnyFunSuite with BeforeAndAfter {
     compiled = SimConfig.withWave
       .withConfig(SpinalConfig(targetDirectory = "rtl"))
       .compile(
-        new Poy(SFix(peak = 8 exp, width = 16 bits), poy = 3, pox = 3, kernel_size = 3)
+        new Poy(SFix(peak = 2 exp, width = 16 bits), poy = 3, pox = 3, kernel_size = 3)
       )
   }
   test("a") {
@@ -36,10 +36,11 @@ class PoyTestbench extends AnyFunSuite with BeforeAndAfter {
         clockDomain.waitSampling()
         io.clear #= false
         io.reset_mac #= false
+        io.activation.buffer.foreach(_.foreach(_ #= 0))
 
-        for (i <- 0 to 100) {
+        for (i <- 0 to 10) {
           fork {
-            io.activation.randomize()
+            io.activation.buffer.foreach(_.foreach(s => s #= s.toBigDecimal + 0.1))
           }
           fork {
             io.weight.randomize()

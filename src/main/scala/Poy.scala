@@ -49,7 +49,7 @@ class Poy(operandType: HardType[SFix], poy: Int = 3, pox: Int = 3, kernel_size: 
         }
       }
 
-      pox_array(i).io.reset_mac := io.reset_mac
+      pox_array(i).io.reset_mac := io.reset_mac | row_counter.willOverflow
 
       io.output(i) := pox_array(i).io.output
     }
