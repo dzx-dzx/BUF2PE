@@ -37,7 +37,9 @@ class PoyTestbench extends AnyFunSuite with BeforeAndAfter {
         io.clear #= false
         io.reset_mac #= false
         io.weight #= 0.01
-        io.activation.buffer.foreach(_.foreach(_ #= 0))
+        io.activation.buffer.zipWithIndex.foreach { case (v, i) =>
+          v.zipWithIndex.foreach { case (s, j) => s #= i * 0.5 + j * 0.05 }
+        }
         io.activation.buffer_standby.zipWithIndex.foreach { case (s, i) => s #= i * 0.05 }
 
         print(SFix(peak = 2 exp, width = 16 bits).maxValue)
