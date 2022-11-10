@@ -1,13 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.108 (w)1999-2020 BSI
-[*] Wed Nov 09 13:00:43 2022
+[*] Thu Nov 10 18:08:07 2022
 [*]
-[dumpfile] "C:\Users\dzx\Nextcloud\University\4-1\AI Chip Circuits Design\Project\2\BUF2PE\simWorkspace\Poy\Poy\test.vcd"
-[savefile] "C:\Users\dzx\Nextcloud\University\4-1\AI Chip Circuits Design\Project\2\BUF2PE\simWorkspace\Poy\poy.gtkw"
-[timestart] 58
+[dumpfile] "C:\Users\dzx\Nextcloud\University\4-1\AI Chip Circuits Design\Project\2\BUF2PE\simWorkspace\Poy\test.vcd"
+[dumpfile_mtime] "Thu Nov 10 18:03:33 2022"
+[dumpfile_size] 51342
+[savefile] "C:\Users\dzx\Nextcloud\University\4-1\AI Chip Circuits Design\Project\2\BUF2PE\poy.gtkw"
+[timestart] 84
 [size] 2256 1381
 [pos] -1 -1
-*-4.241356 81 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-4.241356 110 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] TOP.
 [treeopen] TOP.Poy.
 [treeopen] TOP.Poy.areaWithReset_pox_array_0.
@@ -26,58 +28,64 @@
 [signals_width] 894
 [sst_expanded] 1
 [sst_vpaned_height] 425
-@28
+@29
 TOP.clk
 TOP.io_clear
-@200
+@201
 -
-@22
+@23
 TOP.io_activation_buffer_0_0[15:0]
 TOP.io_activation_buffer_0_1[15:0]
 TOP.io_activation_buffer_0_2[15:0]
 TOP.io_activation_buffer_standby_0[15:0]
-@200
+@201
 -
-@22
+@23
 TOP.io_activation_buffer_1_0[15:0]
 TOP.io_activation_buffer_1_1[15:0]
 TOP.io_activation_buffer_1_2[15:0]
 TOP.io_activation_buffer_standby_1[15:0]
-@200
+@201
 -
-@22
+@23
 TOP.io_activation_buffer_2_0[15:0]
 TOP.io_activation_buffer_2_1[15:0]
 TOP.io_activation_buffer_2_2[15:0]
 TOP.io_activation_buffer_standby_2[15:0]
-@200
+@201
 -
-@22
+@23
 TOP.Poy.areaWithReset_pox_array_0.pe_array_0.mac_9.io_activation[15:0]
 TOP.Poy.areaWithReset_pox_array_0.pe_array_1.mac_9.io_activation[15:0]
 TOP.Poy.areaWithReset_pox_array_0.pe_array_2.mac_9.io_activation[15:0]
-@820
+@821
 TOP.Poy.areaWithReset_pox_array_0.io_activation_source_from_string[63:0]
-@200
+@201
 -
-@22
+@23
 TOP.Poy.areaWithReset_pox_array_1.pe_array_0.mac_9.io_activation[15:0]
 TOP.Poy.areaWithReset_pox_array_1.pe_array_1.mac_9.io_activation[15:0]
 TOP.Poy.areaWithReset_pox_array_1.pe_array_2.mac_9.io_activation[15:0]
-@820
+@821
 TOP.Poy.areaWithReset_pox_array_1.io_activation_source_from_string[63:0]
-@200
+@201
 -
-@22
+@23
 TOP.Poy.areaWithReset_pox_array_2.pe_array_0.mac_9.io_activation[15:0]
 TOP.Poy.areaWithReset_pox_array_2.pe_array_1.mac_9.io_activation[15:0]
 TOP.Poy.areaWithReset_pox_array_2.pe_array_2.mac_9.io_activation[15:0]
-@820
+@821
 TOP.Poy.areaWithReset_pox_array_2.io_activation_source_from_string[63:0]
-@200
+@201
 -
-@28
+@29
 TOP.Poy.areaWithReset_column_counter_value[1:0]
 TOP.Poy.areaWithReset_row_counter_value[1:0]
+@201
+-
+@23
+TOP.Poy.areaWithReset_pox_array_2.pe_array_0.mac_9.io_activation[15:0]
+TOP.Poy.areaWithReset_pox_array_2.pe_array_0.mac_9.io_weight[15:0]
+TOP.Poy.areaWithReset_pox_array_2.pe_array_0.mac_9.accumulator[15:0]
 [pattern_trace] 1
 [pattern_trace] 0
