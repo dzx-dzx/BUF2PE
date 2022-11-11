@@ -15,7 +15,8 @@ lazy val BUF2PE = (project in file("."))
       "org.scalatest" %% "scalatest" % "3.2.13" % "test",
       spinalCore,
       spinalLib,
-      spinalIdslPlugin
+      spinalIdslPlugin,
+      "ai.djl.pytorch" % "pytorch-engine" % "0.19.0" % "runtime"
     )
   )
 
