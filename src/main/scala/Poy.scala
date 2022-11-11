@@ -16,7 +16,7 @@ class Poy(operandType: HardType[SFix], poy: Int = 3, pox: Int = 3, kernel_size: 
     val reset_mac = in(Bool)
   }
   val areaWithReset = new ClockingArea(ClockDomain.current.copy(softReset = io.clear)) {
-    val pox_array: Seq[Pox] = Seq.fill(poy)(new Pox(operandType))
+    val pox_array: Seq[Pox] = Seq.fill(poy)(new Pox(operandType, pox, kernel_size))
     val column_counter      = Counter(0 until kernel_size, True)
     val row_counter         = Counter(0 until kernel_size, column_counter.willOverflow)
 
