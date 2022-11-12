@@ -32,11 +32,9 @@ class PoyTestbench extends AnyFunSuite with BeforeAndAfter {
 
         clockDomain.forkStimulus(5)
         io.clear     #= true
-        io.reset_mac #= true
 
         clockDomain.waitSampling(10)
         io.clear     #= false
-        io.reset_mac #= false
         io.weight    #= pow(2, -5)
         io.activation.buffer.zipWithIndex.foreach { case (v, i) =>
           v.zipWithIndex.foreach { case (s, j) => s #= i * pow(2, -5) + j * pow(2, -7) }

@@ -11,14 +11,12 @@ class Poy(operandType: HardType[SFix], poy: Int = 3, pox: Int = 3, kernel_size: 
       val buffer_standby = in(Vec(operandType, poy))
     }
     val output = out(Vec(Vec(operandType, pox), poy))
-    // val en     = in(Bool)
-    val clear     = in(Bool)
-    val reset_mac = in(Bool)
+
+    val row, column = in UInt (log2Up(kernel_size) bits)
+    val clear       = in(Bool)
   }
   val areaWithReset = new ClockingArea(ClockDomain.current.copy(softReset = io.clear)) {
     val pox_array: Seq[Pox] = Seq.fill(poy)(new Pox(operandType, pox, kernel_size))
-    val column_counter      = Counter(0 until kernel_size, True)
-    val row_counter         = Counter(0 until kernel_size, column_counter.willOverflow)
 
     for (i <- 0 until poy) {
       pox_array(i).io.weight                    := io.weight
@@ -31,15 +29,15 @@ class Poy(operandType: HardType[SFix], poy: Int = 3, pox: Int = 3, kernel_size: 
         pox_array(i).io.activation.fifo_in := pox_array(i + 1).io.activation.fifo_out
       }
 
-      when(row_counter === 0 || Bool(i == poy - 1)) {
-        when(column_counter === 0) {
+      when(io.row === 0 || Bool(i == poy - 1)) {
+        when(io.column === 0) {
           pox_array(i).io.activation.source_from := ActivationSource.BUFFER
         } otherwise {
           pox_array(i).io.activation.source_from := ActivationSource.SHIFT
         }
       } otherwise {
         if (i == poy - 1) {
-          when(column_counter === 0) {
+          when(io.column === 0) {
             pox_array(i).io.activation.source_from := ActivationSource.BUFFER
           } otherwise {
             pox_array(i).io.activation.source_from := ActivationSource.SHIFT
@@ -49,7 +47,7 @@ class Poy(operandType: HardType[SFix], poy: Int = 3, pox: Int = 3, kernel_size: 
         }
       }
 
-      pox_array(i).io.reset_mac := io.reset_mac | row_counter.willOverflow
+      pox_array(i).io.reset_mac := io.row === kernel_size - 1
 
       io.output(i) := pox_array(i).io.output
     }

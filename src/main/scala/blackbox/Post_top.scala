@@ -13,6 +13,7 @@ class Post_top(val INT_BITS: Int = 4, val POX: Int = 3, val POY: Int = 3, val CH
     val rst               = in Bool ()
     val mac_to_serializer = in Bits (CHANNEL_N * POY * POX * 16 bits)
     val mac_output_valid  = in Bool ()
+    val mac_valid_number  = in UInt (log2Up(POY) bits)
     val K                 = in Bits (16 bits)
     val B                 = in Bits (16 bits)
     val bias              = in Bits (POX * 16 bits)
@@ -35,6 +36,7 @@ class BlackBox_Post_top(val INT_BITS: Int = 4, val POX: Int = 3, val POY: Int = 
   val io = new Bundle {
     val mac_to_serializer = in Bits (CHANNEL_N * POY * POX * 16 bits)
     val mac_output_valid  = in Bool ()
+    val mac_valid_number  = in UInt (log2Up(POY) bits)
     val K                 = in Bits (16 bits)
     val B                 = in Bits (16 bits)
     val bias              = in Bits (POX * 16 bits)
@@ -42,6 +44,7 @@ class BlackBox_Post_top(val INT_BITS: Int = 4, val POX: Int = 3, val POY: Int = 
   val blackBox = new Post_top()
   io.mac_to_serializer <> blackBox.io.mac_to_serializer
   io.mac_output_valid  <> blackBox.io.mac_output_valid
+  io.mac_valid_number  <> blackBox.io.mac_valid_number
   io.K                 <> blackBox.io.K
   io.B                 <> blackBox.io.B
   io.bias              <> blackBox.io.bias
