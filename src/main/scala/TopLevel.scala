@@ -9,10 +9,10 @@ class TopLevel(
     val poy: Int = 4,
     val pox: Int = 4,
     val kernel_size: Int = 3,
-    val CHANNEL_N: Int = 2
+    val CHANNEL_N: Int = 4
 ) extends Component {
   def PoyType      = new Poy(operandType, poy = poy, pox = pox, kernel_size = kernel_size)
-  def Post_topType = new Post_top(INT_BITS = operandType().maxExp, POX = pox, POY = poy)
+  def Post_topType = new Post_top(INT_BITS = operandType().maxExp, POX = pox, POY = poy, CHANNEL_N = CHANNEL_N)
   val io = new Bundle {
     val poyInput = new Bundle {
       val master_en = in Bool ()
