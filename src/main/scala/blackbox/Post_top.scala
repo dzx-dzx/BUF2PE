@@ -30,6 +30,8 @@ class Post_top(val INT_BITS: Int = 4, val POX: Int = 3, val POY: Int = 3, val CH
   addRTLPath("../src/Mux.v")
   addRTLPath("../src/PostProcess.v")
   addRTLPath("../src/Serializer.v")
+  addRTLPath("../src/Pooling.v")
+  addRTLPath("../src/Multiplier.v")
 }
 class BlackBox_Post_top(val INT_BITS: Int = 4, val POX: Int = 3, val POY: Int = 3, val CHANNEL_N: Int = 2)
     extends Component {
@@ -55,6 +57,5 @@ object BlackBox_Post_top {
       .generateVerilog(
         gen = new BlackBox_Post_top()
       )
-      .mergeRTLSource()
   }
 }
