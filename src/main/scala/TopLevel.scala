@@ -8,7 +8,7 @@ class TopLevel(
     val pof: Int = 4,
     val poy: Int = 4,
     val pox: Int = 4,
-    val kernel_size: Int = 3,
+    val kernel_size: Int = 5,
     val CHANNEL_N: Int = 4
 ) extends Component {
   def PoyType      = new Poy(operandType, poy = poy, pox = pox, kernel_size = kernel_size)
@@ -21,8 +21,10 @@ class TopLevel(
         val buffer         = in(Vec(Vec(operandType, pox), poy))
         val buffer_standby = in(Vec(operandType, poy))
       }
-      val clear = in(Vec(Bool, pof))
+      val clear     = in(Vec(Bool, pof))
+      val reset_mac = in(Bool)
     }
+    val conv_output = out Vec (Vec(Vec(operandType, pox), poy), pof)
 
     val mac_valid_number = in UInt (log2Up(poy) bits)
     val post = Vec(
@@ -43,16 +45,20 @@ class TopLevel(
   val post = Seq.fill(pof / CHANNEL_N)(Post_topType)
   assert(pof % CHANNEL_N == 0)
 
-  val column_counter        = Counter(0 until kernel_size, io.poyInput.master_en)
-  val row_counter           = Counter(0 until kernel_size, column_counter.willOverflow)
-  val input_channel_counter = Counter(0 until pof, row_counter.willOverflow)
+  val column_counter = Counter(0 until kernel_size, io.poyInput.master_en)
+  val row_counter    = Counter(0 until kernel_size, column_counter.willOverflow)
+  // val input_channel_counter = Counter(0 until pof, row_counter.willOverflow)
 
   for (f <- 0 until pof) {
     conv(f).io.weight := io.poyInput.weight(f)
     conv(f).io.activation.assignAllByName(io.poyInput.activation)
-    conv(f).io.row    := row_counter
-    conv(f).io.column := column_counter
-    conv(f).io.clear  := io.poyInput.clear(f)
+    conv(f).io.row       := row_counter
+    conv(f).io.column    := column_counter
+    conv(f).io.clear     := io.poyInput.clear(f)
+    conv(f).io.reset_mac := io.poyInput.reset_mac
+    for (y <- 0 until poy)
+      for (x <- 0 until pox)
+        io.conv_output(f)(y)(x) := conv(f).io.output(y)(x)
 
   }
   for (i <- 0 until pof / CHANNEL_N) {
@@ -66,7 +72,7 @@ class TopLevel(
     post(i).io.K                := io.post(i).K
     post(i).io.B                := io.post(i).B
     post(i).io.bias             := io.post(i).bias
-    post(i).io.mac_output_valid := input_channel_counter.willOverflow
+    post(i).io.mac_output_valid := False
     post(i).io.mac_valid_number := io.mac_valid_number
     io.post(i).relu_out         := post(i).io.relu_out
     io.post(i).relu_out_valid   := post(i).io.relu_out_valid

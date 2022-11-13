@@ -12,8 +12,8 @@ class Poy(operandType: HardType[SFix], poy: Int = 3, pox: Int = 3, kernel_size: 
     }
     val output = out(Vec(Vec(operandType, pox), poy))
 
-    val row, column = in UInt (log2Up(kernel_size) bits)
-    val clear       = in(Bool)
+    val row, column      = in UInt (log2Up(kernel_size) bits)
+    val clear, reset_mac = in(Bool)
   }
   val areaWithReset = new ClockingArea(ClockDomain.current.copy(softReset = io.clear)) {
     val pox_array: Seq[Pox] = Seq.fill(poy)(new Pox(operandType, pox, kernel_size))
@@ -47,7 +47,7 @@ class Poy(operandType: HardType[SFix], poy: Int = 3, pox: Int = 3, kernel_size: 
         }
       }
 
-      pox_array(i).io.reset_mac := io.row === kernel_size - 1
+      pox_array(i).io.reset_mac := io.reset_mac
 
       io.output(i) := pox_array(i).io.output
     }
