@@ -79,7 +79,7 @@ class TopLevel(
 
 object TopLevel {
   def main(args: Array[String]): Unit = {
-    SpinalConfig(targetDirectory = "rtl")
+    SpinalConfig(targetDirectory = "rtl", dumpWave = DumpWaveConfig())
       .generateVerilog(
         gen = new TopLevel(SFix(peak = 4 exp, width = 16 bits))
       )
